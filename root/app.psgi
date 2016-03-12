@@ -16,7 +16,7 @@ builder {
     );
 
     DarkMeta::Browser->new(
-        root => '/Users/slittle/Projects/work/main',
+        root => '.',
         tmpl => 'root/tmpl/code.tmpl'
     );
 };
