@@ -129,11 +129,7 @@ Prism.languages.modern_perl = {
         pattern: /<(?![<=])\S*>|\b_\b/,
         alias: 'symbol'
     },
-    'vstring': {
-        // v1.2, 1.2.3
-        pattern: /v\d+(\.\d+)*|\d+(\.\d+){2,}/,
-        alias: 'string'
-    },
+
     'function': {
         pattern: /sub [A-Za-z0-9_]+/i,
         inside: {
@@ -142,11 +138,34 @@ Prism.languages.modern_perl = {
         }
     },
 
+    'perl-version-usage': {
+        pattern: /use v?[0-9_.]+/,
+        inside: {
+            keyword: /use/,
+            vstring: /v\d+(\.\d+)*|\d+(\.\d+){2,}/,
+            version: /[0-9_.]+/
+        }
+    },
+
+    'vstring': {
+        // v1.2, 1.2.3
+        pattern: /v\d+(\.\d+)*|\d+(\.\d+){2,}/,
+        alias: 'string'
+    },
+
     'package-usage': {
         pattern: /(use|no|require) [A-Za-z0-9_:]+/,
         inside: {
             keyword: /use|no/,
             'built-in-function': /require/,
+            'package-name' : /[A-Za-z0-9_:]+/
+        }
+    },
+
+    'package-declr': {
+        pattern: /package [A-Za-z0-9_:]+/,
+        inside: {
+            keyword: /package/,
             'package-name' : /[A-Za-z0-9_:]+/
         }
     },
@@ -159,20 +178,6 @@ Prism.languages.modern_perl = {
     'markers' : /\b__(PACKAGE|FILE|LINE|SUB|DATA|END)__\b/,
     'phases' : /\b(BEGIN|INIT|CHECK|UNICHECK|END)\b/,
 
-    'perl-version-usage': {
-        pattern: /use [0-9_.]+/,
-        inside: {
-            keyword: /use/,
-            version: /[0-9_.]+/
-        }
-    },
-    'package-declr': {
-        pattern: /package [A-Za-z0-9_:]+/,
-        inside: {
-            keyword: /package/,
-            'package-name' : /[A-Za-z0-9_:]+/
-        }
-    },
     'class-method-call': {
         pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\-\>[A-Za-z0-9_]+/,
         inside: {
