@@ -11,6 +11,15 @@ $(function () {
         $(e).html('<a name="' + name + '">' + name + '</a>');
     });
 
+    var perldoc_linker = function (i, e) {
+        var name = $(e).text();
+        $(e).html('<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>');
+    };
+
+    $('.built-in-function').each(perldoc_linker);
+    $('.keyword'          ).each(perldoc_linker);
+    $('.statements'       ).each(perldoc_linker);
+
 });
 
 // NOTE:
