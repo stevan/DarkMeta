@@ -134,6 +134,16 @@ Prism.languages.modern_perl = {
             'sub-name': /[A-Za-z0-9_]+/
         }
     },
+    'statements': /\b(else|elsif|for|foreach|given|if|unless|until|when|while)\b/,
+    'keyword': /\b(break|continue|do|goto|last|local|my|next|no|our|package|redo|return|state|sub|use)\b/,
+    'built-in-function': /\b(abs|accept|alarm|atan|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|connect|cos|crypt|dbmclose|dbmopen|defined|delete|die|dump|each|eof|eval|evalbytes|exec|exists|exit|exp|fc|fctnl|fileno|flock|fork|format|formline|getc|getlogin|getpeername|getpgrp|getppid|getpriority|glob|gmtime|grep|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|length|link|listen|localtime|lock|log|lstat|map|mkdir|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|prototype|push|quotemeta|rand|read|readdir|readline|readlink|readpipe|recv|ref|rename|require|reset|rewinddir|rindex|rmdir|say|scalar|seek|seekdir|select|send|shift|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sgrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|sysseek|system|syswrite|tell|telldir|tie|tied|time|times|truncate|uc|ucfirst|umask|unlink|unpack|unshift|untie|utime|values|vec|wait|waitpid|wantarray|warn|write)\b/,
+    'number': /\b-?(0x[\dA-Fa-f](_?[\dA-Fa-f])*|0b[01](_?[01])*|(\d(_?\d)*)?\.?\d(_?\d)*([Ee][+-]?\d+)?)\b/,
+    'undef' : /\b(undef)\b/,
+    'markers' : /\b__(PACKAGE|FILE|LINE|SUB|DATA|END)__\b/,
+    'phases' : /\b(BEGIN|INIT|CHECK|UNICHECK|END)\b/,
+
+    // my (major) additions are here
+
     'perl-version-usage': {
         pattern: /use [0-9_.]+/,
         inside: {
@@ -156,31 +166,41 @@ Prism.languages.modern_perl = {
             'package-name' : /[A-Za-z0-9_:]+/
         }
     },
-    /*
-     * I originally thought this was a good idea,
-     * but now I am less convinced, so I am commenting
-     * it out for the moment.
-     *
-     * My line of thinking is that if we include this
-     * package detection then we should also detect
-     * fully qualified functions and packages without
-     * semicolons in it. Given that, we should also support
-     * linking directly to those function/method definitions
-     * which gets a little more complex.
-
     'class-method-call': {
-        pattern: /([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\-\>/,
+        pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\-\>[A-Za-z0-9_]+/,
         inside: {
-            'package-name' : /[A-Za-z0-9_:]+/
+            'package-name' : /([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+/,
+            'method-name' : /[A-Za-z0-9_]+/
         }
     },
-    */
-    'statements': /\b(else|elsif|for|foreach|given|if|unless|until|when|while)\b/,
-    'keyword': /\b(break|continue|do|goto|last|local|my|next|no|our|package|redo|return|state|sub|use)\b/,
-    'built-in-function': /\b(abs|accept|alarm|atan|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|connect|cos|crypt|dbmclose|dbmopen|defined|delete|die|dump|each|eof|eval|evalbytes|exec|exists|exit|exp|fc|fctnl|fileno|flock|fork|format|formline|getc|getlogin|getpeername|getpgrp|getppid|getpriority|glob|gmtime|grep|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|length|link|listen|localtime|lock|log|lstat|map|mkdir|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|prototype|push|quotemeta|rand|read|readdir|readline|readlink|readpipe|recv|ref|rename|require|reset|rewinddir|rindex|rmdir|say|scalar|seek|seekdir|select|send|shift|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sgrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|sysseek|system|syswrite|tell|telldir|tie|tied|time|times|truncate|uc|ucfirst|umask|unlink|unpack|unshift|untie|utime|values|vec|wait|waitpid|wantarray|warn|write)\b/,
-    'number': /\b-?(0x[\dA-Fa-f](_?[\dA-Fa-f])*|0b[01](_?[01])*|(\d(_?\d)*)?\.?\d(_?\d)*([Ee][+-]?\d+)?)\b/,
+    'super-method-call': {
+        pattern: /\-\>SUPER\:\:[A-Za-z0-9_]+/,
+        inside: {
+            'super-method-name' : /SUPER\:\:[A-Za-z0-9_]+/
+        }
+    },
+    'next-method-call': {
+        pattern: /\-\>next::method/
+    },
+    'method-call': {
+        pattern: /\-\>[A-Za-z0-9_]+/,
+        inside: {
+            'method-name' : /[A-Za-z0-9_]+/
+        }
+    },
+    'fully-qualified-function-call': {
+        pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\(/,
+        inside: {
+            'fully-qualified-function-name' : /([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+/
+        }
+    },
+    'function-call': {
+        pattern: /[A-Za-z0-9_]+\(/,
+        inside: {
+            'function-name' : /[A-Za-z0-9_]+/
+        }
+    },
+
     'operator': /-[rwxoRWXOezsfdlpSbctugkTBMAC]\b|\+[+=]?|-[-=>]?|\*\*?=?|\/\/?=?|=[=~>]?|~[~=]?|\|\|?=?|&&?=?|<(?:=>?|<=?)?|>>?=?|![~=]?|[%^]=?|\.(?:=|\.\.?)?|[\\?]|\bx(?:=|\b)|\b(lt|gt|le|ge|eq|ne|cmp|not|and|or|xor)\b/,
     'punctuation': /[{}[\];(),:]/,
-    'undef' : /\b(undef)\b/,
-    'markers' : /\b__(PACKAGE|FILE|LINE|SUB|DATA|END)__\b/,
 };
