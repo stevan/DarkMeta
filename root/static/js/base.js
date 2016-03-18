@@ -6,7 +6,7 @@ $(function () {
         $(e).html('<a href="' + link + '">' + name + '</a>');
     });
 
-    $('.function > .sub-name').each(function (i, e) {
+    $('.sub > .sub-name').each(function (i, e) {
         var name = $(e).text();
         $(e).html('<a name="' + name + '">' + name + '</a>');
     });
@@ -16,9 +16,9 @@ $(function () {
         $(e).html('<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>');
     };
 
-    $('.built-in-function').each(perldoc_linker);
-    $('.keyword'          ).each(perldoc_linker);
-    $('.statements'       ).each(perldoc_linker);
+    $('.built-in-sub').each(perldoc_linker);
+    $('.keyword'     ).each(perldoc_linker);
+    $('.statement'   ).each(perldoc_linker);
 
 });
 
