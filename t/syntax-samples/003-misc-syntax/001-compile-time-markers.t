@@ -1,12 +1,14 @@
 #!perl -w
 
-=pod
 
-__PACKAGE__
-__FILE__
-__LINE__
-__SUB__
-__DATA__
+say __PACKAGE__;
+say __FILE__;
+say __LINE__;
+say __SUB__;
+
+1;
+
 __END__
 
-=cut
+__DATA__
+

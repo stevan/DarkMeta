@@ -1,9 +1,11 @@
 #!perl -w
 
-=pod
+grep { $_ * 2 } @ARGV;
+grep {
+    $_ * 2
+} @ARGV;
 
-TODO
+grep $_ * 2, @ARGV;
+grep ($_ * 2), @ARGV;
 
-- test the various forms (block, expression)
 
-=cut

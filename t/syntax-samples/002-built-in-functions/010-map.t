@@ -1,9 +1,10 @@
 #!perl -w
 
-=pod
+map { $_ * 2 } @ARGV;
+map {
+    $_ * 2
+} @ARGV;
 
-TODO
+map $_ * 2, @ARGV;
+map ($_ * 2), @ARGV;
 
-- test the various forms (block, expression)
-
-=cut

@@ -9,3 +9,11 @@ TODO
     - break|continue|last|next|redo
 
 =cut
+
+for ( my $i = 0; $i < 100; $i++ ) {
+    print $i;
+}
+
+foreach my $i ( 0 .. 10 ) {
+    print $i;
+}

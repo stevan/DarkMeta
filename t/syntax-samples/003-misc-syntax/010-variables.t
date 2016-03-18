@@ -1,17 +1,22 @@
 #!perl -w
 
-=pod
 
 ${^POSTMATCH}
 
 $^V
 
-${...}
+${foo}
+${'foo'}
+${"foo$bar"}
+
+${"foo" . $bar}
 
 $foo
 
-$1
+[ $1, $a, $b ]
 
-$_, @_, %!
+($_, @_, %!)
 
-=cut
+%=
+
+
