@@ -28,7 +28,7 @@ sub prepare_app {
 }
 
 sub serve_path {
-    my($self, $env, $dir, $fullpath) = @_;
+    my ($self, $env, $dir, $fullpath) = @_;
 
     #use Carp;
     #Carp::cluck join ' => ' => (
