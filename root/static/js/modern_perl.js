@@ -134,6 +134,16 @@ Prism.languages.modern_perl = {
             'sub-name': /[A-Za-z0-9_]+/
         }
     },
+
+    'package-usage': {
+        pattern: /(use|no|require) [A-Za-z0-9_:]+/,
+        inside: {
+            keyword: /use|no/,
+            'built-in-function': /require/,
+            'package-name' : /[A-Za-z0-9_:]+/
+        }
+    },
+
     'statements': /\b(else|elsif|for|foreach|given|if|unless|until|when|while)\b/,
     'keyword': /\b(break|continue|do|goto|last|local|my|next|no|our|package|redo|return|state|sub|use)\b/,
     'built-in-function': /\b(abs|accept|alarm|atan|bind|binmode|bless|caller|chdir|chmod|chomp|chop|chown|chr|chroot|close|closedir|connect|cos|crypt|dbmclose|dbmopen|defined|delete|die|dump|each|eof|eval|evalbytes|exec|exists|exit|exp|fc|fctnl|fileno|flock|fork|format|formline|getc|getlogin|getpeername|getpgrp|getppid|getpriority|glob|gmtime|grep|hex|import|index|int|ioctl|join|keys|kill|lc|lcfirst|length|link|listen|localtime|lock|log|lstat|map|mkdir|oct|open|opendir|ord|pack|pipe|pop|pos|print|printf|prototype|push|quotemeta|rand|read|readdir|readline|readlink|readpipe|recv|ref|rename|require|reset|rewinddir|rindex|rmdir|say|scalar|seek|seekdir|select|send|shift|shutdown|sin|sleep|socket|socketpair|sort|splice|split|sprintf|sgrt|srand|stat|study|substr|symlink|syscall|sysopen|sysread|sysseek|system|syswrite|tell|telldir|tie|tied|time|times|truncate|uc|ucfirst|umask|unlink|unpack|unshift|untie|utime|values|vec|wait|waitpid|wantarray|warn|write)\b/,
@@ -142,21 +152,11 @@ Prism.languages.modern_perl = {
     'markers' : /\b__(PACKAGE|FILE|LINE|SUB|DATA|END)__\b/,
     'phases' : /\b(BEGIN|INIT|CHECK|UNICHECK|END)\b/,
 
-    // my (major) additions are here
-
     'perl-version-usage': {
         pattern: /use [0-9_.]+/,
         inside: {
             keyword: /use/,
             version: /[0-9_.]+/
-        }
-    },
-    'package-usage': {
-        pattern: /(use|no|require) [A-Za-z0-9_:]+/,
-        inside: {
-            keyword: /use|no/,
-            'built-in-function': /require/,
-            'package-name' : /[A-Za-z0-9_:]+/
         }
     },
     'package-declr': {
