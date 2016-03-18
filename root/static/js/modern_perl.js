@@ -37,12 +37,27 @@ Prism.languages.modern_perl = {
         // FIXME Multi-line single-quoted strings are not supported as they would break variables containing '
         /'(?:[^'\\\r\n]|\\.)*'/
     ],
+    // FIXME Not sure about the handling of ::, ', and #
+    'variable': [
+        // ${^POSTMATCH}
+        /[&*$@%]\{\^[A-Z]+\}/,
+        // $^V
+        /[&*$@%]\^[A-Z_]/,
+        // ${...}
+        /[&*$@%]#?(?=\{)/,
+        // $foo
+        /[&*$@%]#?((::)*'?(?!\d)[\w$]+)+(::)*/i,
+        // $1
+        /[&*$@%]\d+/,
+        // $_, @_, %!
+        // The negative lookahead prevents from breaking the %= operator
+        /(?!%=)[$@%][!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/
+    ],
+
+
     'regex': [
         // m/.../
         /\b(?:m|qr)\s*([^a-zA-Z0-9\s\{\(\[<])(?:[^\\]|\\[\s\S])*?\1[msixpodualngc]*/,
-
-        // m a...a
-        /\b(?:m|qr)\s+([a-zA-Z0-9])(?:[^\\]|\\.)*?\1[msixpodualngc]*/,
 
         // m(...)
         /\b(?:m|qr)\s*\((?:[^()\\]|\\[\s\S])*\)[msixpodualngc]*/,
@@ -64,11 +79,18 @@ Prism.languages.modern_perl = {
             lookbehind: true
         },
 
+        // ----------------------------------------------------------
+        // NOTE:
+        // # WTF Perl, this is stupid!
+        // ----------------------------------------------------------
+        // m a...a
+        ///\b(?:m|qr)\s+([a-zA-Z0-9])(?:[^\\]|\\.)*?\1[msixpodualngc]*/,
         // s a...a...a
-        {
-            pattern: /(^|[^-]\b)(?:s|tr|y)\s+([a-zA-Z0-9])(?:[^\\]|\\[\s\S])*?\2(?:[^\\]|\\[\s\S])*?\2[msixpodualngcer]*/,
-            lookbehind: true
-        },
+        //{
+        //    pattern: /(^|[^-]\b)(?:s|tr|y)\s+([a-zA-Z0-9])(?:[^\\]|\\[\s\S])*?\2(?:[^\\]|\\[\s\S])*?\2[msixpodualngcer]*/,
+        //    lookbehind: true
+        //},
+        // ----------------------------------------------------------
 
         // s(...)(...)
         {
@@ -101,22 +123,7 @@ Prism.languages.modern_perl = {
         /\/(?:[^\/\\\r\n]|\\.)*\/[msixpodualngc]*(?=\s*(?:$|[\r\n,.;})&|\-+*~<>!?^]|(lt|gt|le|ge|eq|ne|cmp|not|and|or|xor|x)\b))/
     ],
 
-    // FIXME Not sure about the handling of ::, ', and #
-    'variable': [
-        // ${^POSTMATCH}
-        /[&*$@%]\{\^[A-Z]+\}/,
-        // $^V
-        /[&*$@%]\^[A-Z_]/,
-        // ${...}
-        /[&*$@%]#?(?=\{)/,
-        // $foo
-        /[&*$@%]#?((::)*'?(?!\d)[\w$]+)+(::)*/i,
-        // $1
-        /[&*$@%]\d+/,
-        // $_, @_, %!
-        // The negative lookahead prevents from breaking the %= operator
-        /(?!%=)[$@%][!"#$%&'()*+,\-.\/:;<=>?@[\\\]^_`{|}~]/
-    ],
+
     'filehandle': {
         // <>, <FOO>, _
         pattern: /<(?![<=])\S*>|\b_\b/,
