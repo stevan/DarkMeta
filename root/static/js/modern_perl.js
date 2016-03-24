@@ -178,7 +178,6 @@ Prism.languages.modern_perl = {
     'undef' : /\b(undef)\b/,
     'compile-time-marker' : /\b__(PACKAGE|FILE|LINE|SUB|DATA|END)__\b/,
     'compile-phase' : /\b(BEGIN|INIT|CHECK|UNICHECK|END)\b/,
-    'loop-label' : /\b[A-Za-z0-9_]+\:/,
 
     'class-method-call': {
         pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\-\>[A-Za-z0-9_]+/,
@@ -217,4 +216,5 @@ Prism.languages.modern_perl = {
 
     'operator': /-[rwxoRWXOezsfdlpSbctugkTBMAC]\b|\+[+=]?|-[-=>]?|\*\*?=?|\/\/?=?|=[=~>]?|~[~=]?|\|\|?=?|&&?=?|<(?:=>?|<=?)?|>>?=?|![~=]?|[%^]=?|\.(?:=|\.\.?)?|[\\?]|\bx(?:=|\b)|\b(lt|gt|le|ge|eq|ne|cmp|not|and|or|xor)\b/,
     'punctuation': /[{}[\];(),:]/,
+    'loop-label' : /\b[A-Za-z0-9_]+\:/,
 };
