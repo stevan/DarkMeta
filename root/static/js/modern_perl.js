@@ -202,15 +202,17 @@ Prism.languages.modern_perl = {
         }
     },
     'fully-qualified-sub-call': {
-        pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\(/,
+        pattern: /\b([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+\s*\(/,
         inside: {
-            'fully-qualified-sub-name' : /([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+/
+            'fully-qualified-sub-name' : /([A-Za-z0-9_]+\:\:)+[A-Za-z0-9_]+/,
+            'punctuation' : /\(/
         }
     },
     'sub-call': {
-        pattern: /[A-Za-z0-9_]+\(/,
+        pattern: /[A-Za-z0-9_]+\s*\(/,
         inside: {
-            'sub-name' : /[A-Za-z0-9_]+/
+            'sub-name' : /[A-Za-z0-9_]+/,
+            'punctuation' : /\(/
         }
     },
 
