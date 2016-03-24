@@ -32,7 +32,7 @@ $(function () {
 
     $('.sub > .sub-name').each(function (i, e) {
         var name = $(e).text();
-        $(e).html('<a name="' + name + '">' + name + '</a>');
+        $(e).html('<a name="code:sub:' + name + '" href="#code:sub:' + name + '">' + name + '</a>');
     });
 
     var perldoc_linker = function (i, e) { $(e).html( DarkMeta.Utils.built_in_sub_to_url( $(e).text() ) ) };
