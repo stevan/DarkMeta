@@ -41,6 +41,28 @@ $(function () {
     $('.keyword'     ).each(perldoc_linker);
     $('.statement'   ).each(perldoc_linker);
 
+    // add in the line numbers ...
+    var source    = $('#source > code').html();
+    var lines     = source.split("\n");
+    var max_width = (lines.length + "").length;
+    var numbered = lines.map(
+        function (line, i) {
+            var line_num = (i + 1) + "";
+            var padding  = (new Array( max_width - line_num.length + 1 )).join(" ");
+
+            /*
+            console.log("line_num[" + line_num + "]");
+            console.log("padding[" + padding + "]");
+            console.log("max_width[" + max_width + "]");
+            console.log("line_num_length[" + line_num.length + "]");
+            console.log("max_width - line_num_length[" + (max_width - (line_num.length)) + "]");
+            console.log('----------------------');
+            */
+            return "<span><span class='line-number'>" + padding + "<a class='line-number-link' name='source:line:" + line_num + "' href='#source:line:" + line_num + "'>" + line_num + "</a></span>" + line + "</span>";
+        }
+    );
+
+    $('#source').html( numbered.join("\n") );
 });
 
 // NOTE:
