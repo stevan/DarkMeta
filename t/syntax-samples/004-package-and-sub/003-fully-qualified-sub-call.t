@@ -1,7 +1,18 @@
 #!perl -w
 
-=pod
+Gorch::foo();
+Gorch::foo(10, 20, 30);
 
-TODO
+Gorch::foo ();
+Gorch::foo (30, @bar);
 
-=cut
+Bar::Baz::foo();
+Bar::Baz::foo(10, 20, 30);
+
+Bar::Baz::foo ();
+Bar::Baz::foo (30, @bar);
+
+DarkMeta::Browser::prepare_app('testing linkage');
+
+
+

@@ -1,7 +1,6 @@
 #!perl -w
 
-=pod
-
-TODO
-
-=cut
+sub foo {
+    my ($x) = @_;
+    return $x + 1;
+}

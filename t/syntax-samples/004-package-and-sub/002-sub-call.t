@@ -1,7 +1,10 @@
 #!perl -w
 
-=pod
+foo();
+foo(10, 20, 30);
 
-TODO
+foo ();
+foo (30, @bar);
 
-=cut
+$foo->();
+$foo->( 100, 20 * 30 );
