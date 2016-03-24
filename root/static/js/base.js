@@ -21,6 +21,10 @@ $(function () {
         var link = DarkMeta.package_to_url( name );
         $(e).html('<a href="' + link + '">' + name + '</a>');
     });
+
+    $('.fully-qualified-sub-name').each(function (i, e) {
+        var name = $(e).text();
+        var link = DarkMeta.fully_qualified_sub_to_url( name );
         $(e).html('<a href="' + link + '">' + name + '</a>');
     });
 
