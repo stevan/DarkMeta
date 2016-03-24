@@ -1,8 +1,26 @@
+var DarkMeta;
+
+DarkMeta = {
+    'package_to_url' : function (name) {
+        return '/lib/' + name.split('::').join('/') + '.pm';
+    },
+    'fully_qualified_sub_to_url' : function (name) {
+        var parts   = name.split('::');
+        var subname = parts.pop();
+        return DarkMeta.package_to_url( parts.join('::') ) + '#' + subname;
+    },
+    'built_in_sub_to_url' : function (name) {
+        return '<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>';
+    }
+};
+
 $(function () {
 
     $('.package-usage > .package-name').each(function (i, e) {
         var name = $(e).text();
-        var link = '/lib/' + name.split('::').join('/') + '.pm';
+        var link = DarkMeta.package_to_url( name );
+        $(e).html('<a href="' + link + '">' + name + '</a>');
+    });
         $(e).html('<a href="' + link + '">' + name + '</a>');
     });
 
@@ -11,10 +29,7 @@ $(function () {
         $(e).html('<a name="' + name + '">' + name + '</a>');
     });
 
-    var perldoc_linker = function (i, e) {
-        var name = $(e).text();
-        $(e).html('<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>');
-    };
+    var perldoc_linker = function (i, e) { $(e).html( DarkMeta.built_in_sub_to_url( $(e).text() ) ) };
 
     $('.built-in-sub').each(perldoc_linker);
     $('.keyword'     ).each(perldoc_linker);
