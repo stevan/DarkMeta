@@ -8,7 +8,7 @@ DarkMeta = {
         'fully_qualified_sub_to_url' : function (name) {
             var parts   = name.split('::');
             var subname = parts.pop();
-            return DarkMeta.package_to_url( parts.join('::') ) + '#' + subname;
+            return DarkMeta.Utils.package_to_url( parts.join('::') ) + '#' + subname;
         },
         'built_in_sub_to_url' : function (name) {
             return '<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>';
