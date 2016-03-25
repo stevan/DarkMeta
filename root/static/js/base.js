@@ -11,29 +11,28 @@ DarkMeta = {
             return DarkMeta.Utils.package_to_url( parts.join('::') ) + '#' + subname;
         },
         'built_in_sub_to_url' : function (name) {
-            return '<a target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>';
+            return '<a class="perldoc-link" target="_blank" href="http://perldoc.perl.org/functions/' + name + '.html">' + name + '</a>';
         }
     }
 };
 
 $(function () {
 
-    $('.package-usage > .package-name').each(function (i, e) {
-        var name = $(e).text();
-        var link = DarkMeta.Utils.package_to_url( name );
-        $(e).html('<a href="' + link + '">' + name + '</a>');
-    });
-
     $('.fully-qualified-sub-name').each(function (i, e) {
         var name = $(e).text();
         var link = DarkMeta.Utils.fully_qualified_sub_to_url( name );
-        $(e).html('<a href="' + link + '">' + name + '</a>');
+        $(e).html('<a class="sub-link" href="' + link + '">' + name + '</a>');
     });
 
     $('.sub > .sub-name').each(function (i, e) {
         var name = $(e).text();
-        $(e).html('<a name="code:sub:' + name + '" href="#code:sub:' + name + '">' + name + '</a>');
+        $(e).html('<a class="sub-anchor" name="code:sub:' + name + '" href="#code:sub:' + name + '">' + name + '</a>');
     });
+
+    var package_linker = function (i, e) { var name = $(e).text(); $(e).html('<a class="package-link" href="' + DarkMeta.Utils.package_to_url( name ) + '">' + name + '</a>') };
+
+    $('.package-usage     > .package-name').each(package_linker);
+    $('.class-method-call > .package-name').each(package_linker);
 
     var perldoc_linker = function (i, e) { $(e).html( DarkMeta.Utils.built_in_sub_to_url( $(e).text() ) ) };
 
@@ -58,7 +57,7 @@ $(function () {
             console.log("max_width - line_num_length[" + (max_width - (line_num.length)) + "]");
             console.log('----------------------');
             */
-            return "<span><span class='line-number'>" + padding + "<a class='line-number-link' name='source:line:" + line_num + "' href='#source:line:" + line_num + "'>" + line_num + "</a></span>" + line + "</span>";
+            return "<span><span class='line-number'>" + padding + "<a class='line-number-anchor' name='source:line:" + line_num + "' href='#source:line:" + line_num + "'>" + line_num + "</a></span>" + line + "</span>";
         }
     );
 

@@ -1,10 +1,4 @@
-/*
-NOTE:
-
-This was also stolen from:;
-    https://metacpan.org/_assets/d9ff6fc28efe349c1ffc17c397bd95ca.css
-
-*/
+/* CODE blocks, basic stuff */
 
 pre {
   display: block;
@@ -27,6 +21,7 @@ pre code {
   background-color: transparent;
 }
 
+/* Line Numbers */
 
 .line-number {
     padding-right: 0.6em;
@@ -39,12 +34,60 @@ pre code {
     user-select: none;
 }
 
-a.line-number-link {
+a.line-number-anchor {
     color: #999;
     text-decoration: none;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
+a.line-number-anchor:hover {
+    text-decoration: underline;
+}
+
+/* Subroutine Anchors */
+
+a.sub-anchor {
+    color: #905;
+    text-decoration: none;
+}
+a.sub-anchor:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* External Perldoc Anchors */
+
+a.perldoc-link  {
+    color: #07a;
+    font-weight: bold;
+    text-decoration: none;
+}
+a.perldoc-link:hover  {
+    text-decoration: underline;
+}
+
+/* Package Usage links */
+
+a.package-link {
+    color: #a67f59;
+    text-decoration: none;
+}
+a.package-link:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Subroutine Usage links */
+
+a.sub-link {
+    color: #a67f59;
+    text-decoration: none;
+}
+a.sub-link:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+
+
+
