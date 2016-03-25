@@ -42,15 +42,20 @@ sub serve_path {
         my $file = $dir;
 
         my $code_file = Path::Class::File->new( $file )
-            or return $self->return_403;
+            || return $self->return_403;
         my $code = $code_file->slurp;
 
-        my $body = '';
+        my %vars = (
+            code => $code,
+            path => $code_file->relative,
+        );
+
+        my $output = '';
         my $template = Template->new({ INCLUDE_PATH => Cwd::cwd() });
-        $template->process( $self->{tmpl}, { code => $code }, \$body )
+        $template->process( $self->{tmpl}, \%vars, \$output )
             || die $template->error();
 
-        return [ 200, [ 'Content-Type' => 'text/html' ], [ $body ] ];
+        return [ 200, [ 'Content-Type' => 'text/html' ], [ $output ] ];
     }
 }
 

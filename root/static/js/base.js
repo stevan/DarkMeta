@@ -54,5 +54,20 @@ $(function () {
     );
 
     $('#source').html( numbered.join("\n") );
+
+    // link the path
+    var path   = $('#path').text();
+    var parts  = path.split('/');
+    var linked = [
+        '<a href="/">&larr;</a>'
+    ];
+    for (var i = 0; i < parts.length; i++) {
+        linked.push('<a href="/' + (parts.slice(0, (i+1)).join('/')) +  '">' + parts[i] + "</a>");
+    }
+    $('#path').html( linked.join('/') );
 });
+
+
+
+
 
