@@ -5,7 +5,6 @@ use warnings;
 
 use parent 'Plack::App::Directory';
 
-use HTTP::Date;
 use Template;
 use Path::Class ();
 use Cwd         ();
