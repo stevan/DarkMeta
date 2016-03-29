@@ -21,6 +21,25 @@ pre code {
   background-color: transparent;
 }
 
+/* Breadcrumbs */
+
+#path {
+    margin: 10px;
+    color: #336699;
+    font-weight: bold;
+}
+
+#path a {
+    color: inherit !important;
+    text-decoration: none;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+#path a:hover {
+    text-decoration: underline;
+}
+
 /* Line Numbers */
 
 .line-number {
