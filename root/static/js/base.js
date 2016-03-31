@@ -41,30 +41,34 @@ $(function () {
     $('.keyword'     ).each(perldoc_linker);
     $('.statement'   ).each(perldoc_linker);
 
-    // add in the line numbers ...
-    var source    = $('#source > code').html();
-    var lines     = source.split("\n");
-    var max_width = (lines.length + "").length;
-    var numbered = lines.map(
-        function (line, i) {
-            var line_num = (i + 1) + "";
-            var padding  = (new Array( max_width - line_num.length + 1 )).join(" ");
-            return "<span><span class='line-number'>" + padding + "<a class='line-number-anchor' name='source:line:" + line_num + "' href='#source:line:" + line_num + "'>" + line_num + "</a></span>" + line + "</span>";
-        }
-    );
+    if ( $('#source').length ) {
+        // add in the line numbers ...
+        var source    = $('#source > code').html();
+        var lines     = source.split("\n");
+        var max_width = (lines.length + "").length;
+        var numbered = lines.map(
+            function (line, i) {
+                var line_num = (i + 1) + "";
+                var padding  = (new Array( max_width - line_num.length + 1 )).join(" ");
+                return "<span><span class='line-number'>" + padding + "<a class='line-number-anchor' name='source:line:" + line_num + "' href='#source:line:" + line_num + "'>" + line_num + "</a></span>" + line + "</span>";
+            }
+        );
 
-    $('#source').html( numbered.join("\n") );
-
-    // link the path
-    var path   = $('#path').text();
-    var parts  = path.split('/');
-    var linked = [
-        '<a href="/">&larr;</a>'
-    ];
-    for (var i = 0; i < parts.length; i++) {
-        linked.push('<a href="/' + (parts.slice(0, (i+1)).join('/')) +  '">' + parts[i] + "</a>");
+        $('#source').html( numbered.join("\n") );
     }
-    $('#path').html( linked.join('/') );
+
+    if ( $('#path').length ) {
+        // link the path
+        var path   = $('#path').text();
+        var parts  = path.split('/');
+        var linked = [
+            '<a href="/">&larr;</a>'
+        ];
+        for (var i = 0; i < parts.length; i++) {
+            linked.push('<a href="/' + (parts.slice(0, (i+1)).join('/')) +  '">' + parts[i] + "</a>");
+        }
+        $('#path').html( linked.join('/') );
+    }
 });
 
 

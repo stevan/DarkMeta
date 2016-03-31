@@ -3,56 +3,73 @@ package DarkMeta::Browser;
 use strict;
 use warnings;
 
-use parent 'Plack::App::Directory';
+use parent 'Plack::Component';
 
 use Template;
 use Path::Class ();
-use Cwd         ();
 
-sub prepare_app {
-    my $self = shift;
+use Carp qw[ confess ];
 
-    my $tmpl = Path::Class::File->new( Cwd::cwd(), $self->{tmpl} );
+use DarkMeta::Browser::File;
+use DarkMeta::Browser::Dir;
 
-    (-e $tmpl && -f $tmpl)
-        || die 'Could not find tmpl file (' . $tmpl . ')';
+use Plack::Request;
+use Plack::Util::Accessor qw[
+    tmpl_root
+    code_root
+];
 
-    my $dir = Path::Class::Dir->new( $self->{root} );
+sub new {
+    my $class = shift;
+    my $self  = $class->SUPER::new( @_ );
 
-    (-e $dir && -d $dir)
-        || die 'Could not find root directory (' . $dir . ')';
+    my $code_root = Path::Class::Dir->new( $self->{code_root} );
 
-    $self->SUPER::prepare_app( @_ );
+    (-e $code_root && -d $code_root)
+        || confess 'Could not find code-root directory (' . $code_root . ')';
+
+    $self->{code_root} = $code_root;
+
+    my $tmpl_root = Path::Class::Dir->new( $self->{tmpl_root} );
+
+    (-e $tmpl_root && -d $tmpl_root)
+        || confess 'Could not find tmpl-root directory (' . $tmpl_root . ')';
+
+    $self->{tmpl_root} = $tmpl_root;
+
+    return $self;
 }
 
-sub serve_path {
-    my ($self, $env, $dir, $fullpath) = @_;
+sub call {
+    my $self = shift;
+    my $r    = Plack::Request->new( shift );
 
-    #use Carp;
-    #Carp::cluck join ' => ' => (
-    #    env      => ($env      // 'undef'),
-    #    dir      => ($dir      // 'undef'),
-    #    fullpath => ($fullpath // 'undef')
-    #);
+    my $path = Path::Class::Dir->new( $self->{code_root}, $r->path );
 
-    if (-d $dir) {
-        return $self->SUPER::serve_path( $env, $dir );
-    } else {
-        my $file = $dir;
+    unless (-e $path) {
+        return [ 404, [], [ 'Could not find path(' . $path->stringify . ')' ]];
+    }
+    else {
+        my $output   = '';
+        my $template = Template->new({ INCLUDE_PATH => $self->{tmpl_root} });
 
-        my $code_file = Path::Class::File->new( $file )
-            || return $self->return_403;
-        my $code = $code_file->slurp;
-
-        my %vars = (
-            code => $code,
-            path => $code_file->relative,
-        );
-
-        my $output = '';
-        my $template = Template->new({ INCLUDE_PATH => Cwd::cwd() });
-        $template->process( $self->{tmpl}, \%vars, \$output )
-            || die $template->error();
+        if (-d $path) {
+            $template->process(
+                'dir.tmpl',
+                {
+                    dir => DarkMeta::Browser::Dir->new( $path )
+                },
+                \$output
+            ) || confess $template->error();
+        } else {
+            $template->process(
+                'file.tmpl',
+                {
+                    file => DarkMeta::Browser::File->new( Path::Class::File->new( $path ) )
+                },
+                \$output
+            ) || confess $template->error();
+        }
 
         return [ 200, [ 'Content-Type' => 'text/html' ], [ $output ] ];
     }

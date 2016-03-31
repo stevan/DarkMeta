@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<link href="/css/prism.css" rel="stylesheet" type="text/css">
+<link href="/css/base.css"  rel="stylesheet" type="text/css">
+
+<title>DarkMeta::Browser</title>
+
+<script src="/js/jquery.js"       type="text/javascript"></script>
+<script src="/js/base.js"         type="text/javascript"></script>
+
+</head>
+<body>
+<div id="path">[% dir.path() %]</div>
+<table>
+    [% FOREACH item IN dir.children() %]
+    <tr>
+        <td><a href="/[% item %]">[% item.basename %]</a></td>
+    </tr>
+    [% END %]
+</table>
+
+</body>
+</html>
